@@ -56,10 +56,13 @@ def process(root):
         for c in s.xpath('cell'):
             cell = create_cell(sheet, cell_element=c)
 
-            try:
-                cell.value = float(c.text)
-            except ValueError:
-                cell.value = c.text
+            if c is None:
+                cell.value = ''
+            else:
+                try:
+                    cell.value = float(c.text)
+                except ValueError:
+                    cell.value = c.text
 
             if 'font' in c.attrib:
                 cell.font = fonts[c.attrib['font']]
